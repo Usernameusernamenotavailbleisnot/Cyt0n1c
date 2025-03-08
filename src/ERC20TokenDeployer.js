@@ -163,17 +163,17 @@ class ERC20TokenDeployer {
     }
     
     async compileContract(contractName) {
-        const spinner = ora(`Compiling NFT contract (${contractName})...`).start();
+        const spinner = ora(`Compiling ERC20 contract (${contractName})...`).start();
         
         try {
             // Replace placeholder in template with actual contract name
-            const contractSource = constants.NFT.CONTRACT_TEMPLATE.replace(/{{CONTRACT_NAME}}/g, contractName);
+            const contractSource = constants.ERC20.CONTRACT_TEMPLATE.replace(/{{CONTRACT_NAME}}/g, contractName);
             
             // Setup compiler input with specific EVM version to ensure compatibility
             const input = {
                 language: 'Solidity',
                 sources: {
-                    'NFTContract.sol': {
+                    'ERC20Contract.sol': {
                         content: contractSource
                     }
                 },
@@ -203,9 +203,9 @@ class ERC20TokenDeployer {
             }
             
             // Extract the contract
-            const contract = output.contracts['NFTContract.sol'][contractName];
+            const contract = output.contracts['ERC20Contract.sol'][contractName];
             
-            spinner.succeed('NFT contract compiled successfully!');
+            spinner.succeed('ERC20 contract compiled successfully!');
             
             return {
                 abi: contract.abi,
@@ -217,8 +217,8 @@ class ERC20TokenDeployer {
         }
     }
     
-    async deployContract(contractName, symbol, maxSupply) {
-        const spinner = ora(`Deploying NFT contract "${contractName}" (${symbol})...`).start();
+    async deployContract(contractName, symbol, decimals) {
+        const spinner = ora(`Deploying ERC20 contract "${contractName}" (${symbol})...`).start();
         let currentNonce;
         let currentGasPrice;
         
@@ -235,14 +235,14 @@ class ERC20TokenDeployer {
             // Prepare deployment transaction
             const deployTx = contract.deploy({
                 data: '0x' + compiledContract.bytecode,
-                arguments: [contractName, symbol, maxSupply]
+                arguments: [contractName, symbol, decimals]
             });
             
             // Get nonce and gas price with optimizations - stop spinner during this
             spinner.stop();
             currentNonce = await this.getNonce();
             currentGasPrice = await this.getGasPrice();
-            spinner.start(`Deploying NFT contract "${contractName}" (${symbol})...`);
+            spinner.start(`Deploying ERC20 contract "${contractName}" (${symbol})...`);
             
             // Estimate gas
             const estimatedGas = await deployTx.estimateGas({
@@ -270,7 +270,7 @@ class ERC20TokenDeployer {
             // Send the transaction
             const receipt = await this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
             
-            spinner.succeed(`NFT contract deployed at: ${receipt.contractAddress}`);
+            spinner.succeed(`ERC20 contract deployed at: ${receipt.contractAddress}`);
             
             return {
                 contractAddress: receipt.contractAddress,
