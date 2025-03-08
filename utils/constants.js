@@ -21,7 +21,7 @@ module.exports = {
     GAS: {
         PRICE_MULTIPLIER: 1.1,
         RETRY_INCREASE: 1.3,
-        MIN_GWEI: 0.001,
+        MIN_GWEI: 0.01,
         MAX_GWEI: 200,
         DEFAULT_GAS: 150000,
       },
