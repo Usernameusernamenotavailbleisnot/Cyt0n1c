@@ -1,0 +1,40 @@
+{
+    "enable_faucet": true,
+    "enable_transfer": true,
+    "enable_contract_deploy": true,
+    "gas_price_multiplier": 1.2,
+    "max_retries": 5,
+    "base_wait_time": 10,
+    "transfer_amount_percentage": 90,
+    "contract": {
+      "contract_interactions": {
+        "enabled": true,
+        "count": {
+          "min": 3,
+          "max": 8
+        },
+        "types": ["setValue", "increment", "decrement", "reset", "contribute"]
+      }
+    },
+    "erc20": {
+      "enable_erc20": true,
+      "mint_amount": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "burn_percentage": 10,
+      "decimals": 18
+    },
+    "nft": {
+      "enable_nft": true,
+      "mint_count": {
+        "min": 2,
+        "max": 5
+      },
+      "burn_percentage": 20,
+      "supply": {
+        "min": 100,
+        "max": 500
+      }
+    }
+  }
