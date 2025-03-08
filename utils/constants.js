@@ -21,10 +21,9 @@ module.exports = {
     GAS: {
         PRICE_MULTIPLIER: 1.1,
         RETRY_INCREASE: 1.3,
-        MIN_GWEI: 1,
+        MIN_GWEI: 0.001,
         MAX_GWEI: 200,
         DEFAULT_GAS: 150000,
-        ENABLE_MULTIPLIER: true  // Default setting to enable gas price multiplier
       },
     
     // Retry and timeout settings
